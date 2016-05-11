@@ -1,0 +1,21 @@
+<ion-navbar *navbar>
+  <ion-title>
+    Current Currency Rates
+  </ion-title>
+</ion-navbar>
+
+<ion-content class="home">
+  <div *ngIf="dataLoaded">
+  <ion-card>
+    <ion-card-header>
+      {{exchange.base}} to
+
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="#c of currencies">{{c}} : {{exchange.rates[c]}}</ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+  </div>
+</ion-content>
