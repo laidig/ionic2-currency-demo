@@ -1,6 +1,9 @@
 <ion-navbar *navbar>
   <ion-title>
-    Current Currency Rates
+    Currency Rates
+    <span *ngIf="dataLoaded">
+      (As of {{exchangeRates.date}})
+      </span>
   </ion-title>
 </ion-navbar>
 
@@ -8,14 +11,28 @@
   <div *ngIf="dataLoaded">
   <ion-card>
     <ion-card-header>
-      {{exchange.base}} to
+
+      Currency:
+      <ion-select name="select1" [(ngModel)]="base" (ngModelChange)="loadCurrencyExchange()">
+        <ion-option *ngFor="let b of supportedCurrencies" value="{{b}}">
+          {{b}}
+        </ion-option>
+      </ion-select> to
+
+      <ion-select name="select2" [(ngModel)]="symbols" (ngModelChange)="loadCurrencyExchange()" multiple="true">
+        <ion-option *ngFor="let s of supportedCurrencies" value="{{s}}">
+          {{s}}
+        </ion-option>
+      </ion-select>
 
     </ion-card-header>
+
     <ion-card-content>
       <ion-list>
-        <ion-item *ngFor="#c of currencies">{{c}} : {{exchange.rates[c]}}</ion-item>
+        <ion-item *ngFor="let c of currenciesLoaded">{{c}} : {{exchangeRates.rates[c]}}</ion-item>
       </ion-list>
     </ion-card-content>
+
   </ion-card>
   </div>
 </ion-content>

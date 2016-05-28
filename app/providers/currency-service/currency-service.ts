@@ -1,7 +1,6 @@
-import {Injectable} from 'angular2/core';
-import {Http} from 'angular2/http';
-import {URLSearchParams} from 'angular2/http';
-import 'rxjs/add/operator/map';
+import {Injectable} from "@angular/core";
+import {Http, URLSearchParams} from "@angular/http";
+import "rxjs/add/operator/map";
 
 /*
   Generated class for the CurrencyService provider.
@@ -23,15 +22,21 @@ export class CurrencyService {
     this.data = null;
   }
 
-  loadCurrencies(base: string, symbol: string) {
+  loadCurrencySymbols(){
+    var symbols: string[] =
+        ["AUD","BGN","BRL","CAD","CHF","CNY","CZK","DKK","EUR","GBP","HKD","HRK","HUF","IDR","ILS","INR","JPY","KRW",
+          "MXN","MYR","NOK","NZD","PHP","PLN","RON","RUB","SEK","SGD","THB","TRY","USD","ZAR"]
+    return symbols;
+  }
+
+  loadCurrencies(base: string, symbols: string[]) {
     let params: URLSearchParams = new URLSearchParams();
+    var symbolString: string = symbols.join(',');
+
     params.set('base', base);
-    params.set('symbols', symbol);
+    params.set('symbols', symbolString);
 
-    if (this.data) {
-      return Promise.resolve(this.data);
-    }
-
+    
     // don't have the data yet
     return new Promise(resolve => {
       this.http.get('http://api.fixer.io/latest', {
